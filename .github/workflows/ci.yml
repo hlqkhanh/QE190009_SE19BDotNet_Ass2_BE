@@ -1,0 +1,28 @@
+name: Backend CI
+on: [push, pull_request]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: taskadmin
+          POSTGRES_PASSWORD: integration-only
+          POSTGRES_DB: tasktrack_tests
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_DATABASE_URL: Host=localhost;Port=5432;Database=tasktrack_tests;Username=taskadmin;Password=integration-only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet restore QE190009_SE19BDotNet_Ass1_BE.sln
+      - run: dotnet build QE190009_SE19BDotNet_Ass1_BE.sln --no-restore --configuration Release
+      - run: dotnet test QE190009_SE19BDotNet_Ass1_BE.sln --no-build --configuration Release

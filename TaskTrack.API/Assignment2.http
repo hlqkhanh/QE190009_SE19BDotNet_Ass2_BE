@@ -1,0 +1,40 @@
+@api = http://localhost:5001
+@email = replace-with-your-private-email
+@password = replace-with-your-private-password
+@accessToken = paste-token-from-login
+@refreshToken = paste-refresh-token-from-login
+
+### Public reads remain public
+GET {{api}}/api/tasks/search
+
+### Register always creates Staff, even if an extra role is submitted
+POST {{api}}/api/auth/register
+Content-Type: application/json
+
+{"fullName":"Grading Staff","email":"{{email}}","password":"{{password}}"}
+
+### Login
+POST {{api}}/api/auth/login
+Content-Type: application/json
+
+{"email":"{{email}}","password":"{{password}}"}
+
+### Verify current account
+GET {{api}}/api/auth/me
+Authorization: Bearer {{accessToken}}
+
+### Admin only (Staff gets 403)
+GET {{api}}/api/accounts
+Authorization: Bearer {{accessToken}}
+
+### Rotate; replace both stored tokens with the response
+POST {{api}}/api/auth/refresh
+Content-Type: application/json
+
+{"refreshToken":"{{refreshToken}}"}
+
+### Logout invalidates all account sessions
+POST {{api}}/api/auth/logout
+Content-Type: application/json
+
+{"refreshToken":"{{refreshToken}}"}

@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.log
+.env
+.env.*
+!.env.example
+submission.private.json
+QE190009_SE19BDotNet_Ass2.docx
+appsettings.Development.json
