@@ -12,3 +12,5 @@
 
 .env*
 appsettings.Development.json
+.tools/
+*.dump

@@ -11,4 +11,6 @@ obj/
 !.env.example
 submission.private.json
 QE190009_SE19BDotNet_Ass2.docx
+.tools/
+*.dump
 appsettings.Development.json
