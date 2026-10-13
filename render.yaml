@@ -1,8 +1,3 @@
-databases:
-  - name: tasktrack-ass2-db
-    databaseName: task_management_ass2
-    user: taskadmin
-    plan: free
 services:
   - type: web
     name: qe190009-tasktrack-ass2-api
@@ -11,9 +6,7 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: tasktrack-ass2-db
-          property: connectionString
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: ASPNETCORE_ENVIRONMENT
